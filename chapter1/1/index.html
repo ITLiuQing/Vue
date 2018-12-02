@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello World</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <!-- 学习如何使用Vue 实现 helloworld -->
+    <div id="app">
+        {{content}}
+    </div>
+    {{content}}
+    <script >
+
+        let app = new Vue({
+            el:'#app',//这个配置项是负责管理的id==app 的 div 区域，以外是不起作用的
+            data:{
+                content:"hello world !"
+            }
+        });
+
+        //如果我们想改变id==app div的内容，该怎么做呢？
+
+        setTimeout(()=>{
+            //$data 就是 上面 data的别名
+            app.$data.content='世界，你好！'
+        },2000);
+         
+    </script>
+</body>
+</html>

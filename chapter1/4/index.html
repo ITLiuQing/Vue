@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todoList</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <!-- 学习如何使用组计化思想实现 todoList -->
+    <div id="app">
+        <input type="text" v-model="inputValue">
+        <button v-on:click="handleBtnClick">提交</button>
+        <ul>
+            <!-- 在引用组件的时候，需要注意把帕斯卡命名的大写改成小写，然后在单词直接加中划线 -->
+            <todo-list v-for="item in list" 
+                       v-bind:content="item">
+            </todo-list>
+        </ul>
+    </div>
+    <script >
+
+        //使用组件可以写成全局和局部两种写法
+
+        //创建一个全局组件
+        // Vue.component('TodoList',{
+        //     props:['content'],
+        //     template:"<li>{{content}}</li>"
+        // });
+        //创建一个局部组件,必须在components里面引用才可以使用 
+        let TodoList={
+            props:['content'],
+            template:"<li>{{content}}</li>"
+        };
+        let app = new Vue({
+            el:'#app',//这个配置项是负责管理的id==app 的 div 区域，以外是不起作用的
+            components:{
+                TodoList:TodoList
+            },
+            methods:{
+                handleBtnClick(){
+                    this.list.push(this.inputValue);
+                    this.inputValue="";//追加后把输入框置空
+                }
+            },
+            data:{
+                list:[
+                    '第一行',
+                    '第二行'
+                ],
+                inputValue:''
+            }
+        });
+
+        
+        
+
+        
+         
+    </script>
+</body>
+</html>
