@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>样式绑定</title>
+    <script src="../../js/vue.js"></script>
+    <style>
+        .actived{
+            color: #f00;
+        }
+    </style>
+</head>
+<body>
+    <!-- 样式绑定 -->
+    <div id="app" > 
+            <div :class="{actived:isActived}" @click="objClick">
+                hello World
+            </div>
+            <div :class="[actived]" @click="arrClick">
+                hello World
+            </div>
+            <div :style="styleObj" @click="arrClick">
+                hello World
+            </div>
+            
+    </div>
+    <script>
+        
+        
+        let vm = new Vue ({
+            el:"#app",
+            data:{
+                isActived:false,
+                actived:'',
+                styleObj:{
+                    color:'#f00'
+                }
+            },
+            methods:{
+                objClick(){
+                    this.isActived=!this.isActived;
+                },
+                arrClick(){
+                    this.actived=this.actived=='actived'?'':'actived'
+                }
+            }
+            
+        });
+        //样式绑定，大家在实际开发中喜欢那种用哪种
+        
+    </script>
+</body>
+</html>

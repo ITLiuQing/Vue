@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表渲染</title>
+    <script src="../../js/vue.js"></script>
+    
+</head>
+<body>
+    <!-- 列表渲染 -->
+    <div id="app" > 
+            <!-- 数组渲染 -->
+            <template v-for="(item,index) in arrList"
+                      :key="item.id">
+               <div>{{item.value}} --- {{index}}</div> 
+            </template>  
+            <button @click="changeArr">数组改变</button>
+            <!-- 对象渲染 -->
+            <template v-for="(item,key,index) in objList"
+                        :key="item.id">
+                        <div>{{key}} : {{item}} --- {{index}}</div> 
+            </template>    
+            <button @click="changeObj">对象改变</button>        
+    </div>
+    <script>
+        
+        
+        let vm = new Vue ({
+            el:"#app",
+            data:{
+                arrList:[
+                    {id:0,value:'你好'},
+                    {id:1,value:'世界'}
+                ],
+                objList:{
+                    name:'LiMing',
+                    age:'28'
+                }
+            },
+            methods:{
+                changeArr(){
+                    this.$set(this.arrList,1,{id:2,value:'world'});//三个参数分别是数组，数组下标，改变的内容
+                },
+                changeObj(){
+                    this.$set(this.objList,'name','HanMeiMei');
+                }
+            }
+            
+        });
+        //注意:知道我为什么在加 key 属性的时候没有用index，而是用的他们可以唯一标识的字段呢？
+        //这里大家需要注意一下，首先当在真实项目开发中，只有用到遍历v-for就一定加key属性，因为，不加的话，在用脚手架工具搭建的项目，启动后会有提示，
+        //而我让大家使用数据的唯一标识的字段去作为key的值，是因为这样可以大大的提高性能，而使用index的话，无法让vue重复dom节点，性能降低
+
+        //如果想改变数组的值的同时，页面也变化，那么请使用变异方法，push pop shift unshift splice sort reverse
+        //还有一个方法可以解决上面这个问题，
+        //可以使用全局的set()方法，也可以使用vue实例的$set()方法，具体数组和对象是怎么使用的呢？
+        //请看上面代码
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 实例</title>
+    <script src="../../js/vue.js">
+        
+    </script>
+</head>
+<body>
+    <!-- Vue 实例 -->
+    <div id="root" @click="handleClick"> 
+        {{message}}
+        <item></item>
+    </div>
+    <script>
+        Vue.component('item',{
+            template:"<div>子组件</div>"
+        });
+        //创建一个根实例
+        let vm = new Vue ({
+            el:"#root",
+            data:{message:"根实例"},
+            methods:{
+                handleClick(){
+                    alert(666);
+                }
+            },
+            watch:{},
+            computed:{},
+            props:{}
+            
+        });
+        
+    </script>
+</body>
+</html>

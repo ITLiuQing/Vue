@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>条件渲染</title>
+    <script src="../../js/vue.js"></script>
+    <style>
+        .actived{
+            color: #f00;
+        }
+    </style>
+</head>
+<body>
+    <!-- 条件渲染 -->
+    <div id="app" > 
+            <div v-if="isShow">
+                hello World
+            </div>
+            <div v-if-else="isShow=='B'">
+                hello World
+            </div>
+            <div v-else>
+                世界你好
+            </div>
+            <div v-show="isShow">
+                hello World
+            </div>
+            
+            
+    </div>
+    <script>
+        
+        
+        let vm = new Vue ({
+            el:"#app",
+            data:{
+                isShow:false,
+            }
+            
+        });
+        //v-if 是否渲染出来，v-show 是否显示出来
+        
+    </script>
+</body>
+</html>

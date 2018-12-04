@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello World</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <!-- 简单的模板语法 -->
+    <div id="app">
+       <div v-text="txt"></div>
+       <div v-html="html"></div>
+    </div>
+    
+    <script >
+
+        let app = new Vue({
+            el:'#app',
+            data:{
+                txt:"hello</br> world !",
+                html:"你好</br>世界 !",
+            }
+        });
+
+        //他们两个的区别就是v-text不会把HTML标签当做HTML标签显示，只是识别成字符串
+        
+         
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性，方法，侦听器</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <!-- 计算属性，方法，侦听器-->
+    <div id="app">
+        
+       <div>{{fullNameWatch}}</div> 
+       <div>{{fullNameFn()}}</div> 
+       <div>{{fullNameComputed}}</div> 
+
+    </div>
+   
+    <script >
+
+
+        let app = new Vue({
+            el:'#app',//这个配置项是负责管理的id==app 的 div 区域，以外是不起作用的
+            data:{
+                firstName:'MeiMei',
+                lastName:'Han',
+                fullNameWatch:'MeiMei Han'
+            },
+            //计算属性
+            computed:{
+                fullNameComputed(){
+                    console.log('in');
+                    return this.firstName + ' ' + this.lastName;
+                }
+            },
+            methods:{
+                fullNameFn(){
+                    console.log('in');
+                    return this.firstName + ' ' + this.lastName;
+                }
+            },
+            watch:{
+                firstName(){
+                    this.fullNameWatch=this.firstName + ' ' + this.lastName;
+                },
+                lastName(){
+                    this.fullNameWatch=this.firstName + ' ' + this.lastName;
+                },
+            }
+        });
+
+        //如果一个功能这个三种都可以实现，优先选择计算属性，既简洁有提高性能！
+
+         
+    </script>
+</body>
+</html>
