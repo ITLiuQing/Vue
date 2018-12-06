@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件参数校验与非props特性</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <div id='root'>
+        <child content="hello world"></child>
+        <child :content="123"></child>
+        <child></child>
+    </div>
+    <script>
+        /**
+         * 参数设置：
+         * 1.类型的设置（以及写法）
+         * 2.值必传 required 为true
+         * 3.默认值 default
+         * 4.自定义校验 validator
+         */ 
+        /**
+         * props特性
+         * 1.如何才算是props特性？
+         * 就是父组件使用子组件的时候，通过属性进行传值的时候，恰好，子组件在props里面声明了对父组件传递过来的属性的一个接收。有一个对应关系。
+         * 2.props特性有什么特点呢？
+         * 父组件绑定在子组件的属性不会被显示出来
+         * 子组件可以使用插值表达式或者this.属性去取得内容
+         * 非props特性
+         * 子组件没有设置props对象的时候，父组件传过来的属性叫做非props特性
+         * 特点：
+         * 页面上显示非props特性
+         * 
+        */
+        Vue.component('child',{
+            props:{
+                content:String,
+                content:Number,
+                content:[Number,String],
+                content:{
+                    // type:String,
+                    type:[String,Number],
+                    required:false,//content true必传
+                    default:'默认值',
+                    validator(value){
+                        //自定义校验
+                    }
+                }
+
+            },
+            template:'<div>{{content}}</div>'
+        }) 
+        let vm= new Vue({
+            el:'#root'
+        })
+    </script>
+</body>
+</html>

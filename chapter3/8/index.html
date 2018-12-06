@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中 动态组件与v-once指令</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- <child-one v-if='type==="child-one"'></child-one>
+        <child-two v-if='type==="child-two"'></child-two> -->
+        <!-- 动态组件 -->
+        <component :is="type"></component>
+        <button @click="handleClick">change</button>
+    </div>
+    <script>
+        /** 
+         * 动态组件
+         * <component :is="组件名"></component>
+         * 会根据 is属性 绑定的 组件，显示相应的组件内容
+         * v-once指令
+         * 如果不给两个组件分别加v-once指令，在来回切换的时候，都要销毁一个再创建一个，
+         * 会消耗性能，如果加上v-once指令就会放在内存里，不会再次销毁和创建，这样可以在做静态展示提高性能
+        */
+        Vue.component('child-one',{
+            template:'<div v-once>one</div>'
+        });
+        Vue.component('child-two',{
+            template:'<div v-once>two</div>'
+        });
+        let vm = new Vue({
+            el:'#root',
+            data:{
+                type:'child-one'
+            },
+            methods:{
+                handleClick(){
+                    this.type = this.type === 'child-one' ? 'child-two':'child-one'
+                }
+            }
+            
+        })
+    </script>
+</body>
+</html>

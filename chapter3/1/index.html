@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件使用中的细节点</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <!-- 1、table tbody 下写模板的时候，怎么使用？ -->
+        <div id="root">
+            <table>
+                <tbody>
+                    <!-- right -->
+                    <tr is="row"> </tr>
+                    <tr is="row"> </tr>
+                    <!-- error -->
+                    <row></row>
+                </tbody>
+            </table>
+        </div>
+    <!-- 2、在子组件如何定义data？ -->
+    <div id="root1">
+           <data-str></data-str>
+    </div>
+    <!-- 3、如何获取Dom? -->
+    <div id="root2">
+           <div ref='getDom' @click='divClick'> hello world</div>
+            <counter ref='one' @change="changeFn"></counter>
+            <span> + </span>
+            <counter ref='two' @change="changeFn"></counter>
+            <span>=</span>
+            <span>{{total}}</span>
+     </div>
+    <script>
+        // 用 is 属性去添加模板,不能直接
+        Vue.component('row',{
+            template:'<tr><td>this is row </td></tr>'
+        })
+        //如何定义data
+        /**
+         * 在子组件定义data的时候，必须是一个函数不能是对象，
+         * 根组件只调用一次，而子组件可能调用多次，子组件的数据可能不同，所以子组件的data是一个函数，这样，就可以使个子组件
+         * 拥有一个独立的数据存储。
+        */
+        Vue.component('dataStr',{
+            data(){
+                return {
+                    content:'this is data'
+                }
+            },
+            template:'<div>{{content}}</div>'
+        })
+
+        //如何获取DOM或者子组件引用
+        /**
+         * ref写在HTML标签上获取的是DOM
+         * 写在模板上，获取到的是子组件的引用
+         */
+        Vue.component('counter',{
+            template:'<span @click="spanClick">{{number}}</span>',
+            data(){
+                return {
+                    number: 0
+                };
+            },
+            methods:{
+                spanClick(){
+                    this.number++;
+                    this.$emit('change');
+                }
+            }
+        })
+        let vm = new Vue({
+            el:'#root2',
+            data:{
+                total:0
+            },
+            methods:{
+                divClick(){
+                    console.log(this.$refs.getDom.innerHTML);
+                },
+                changeFn(){
+                    this.total=this.$refs.one.number+this.$refs.two.number;
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

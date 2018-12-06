@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父子组件传值</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <counter :count="3" @change="changeFn"></counter>
+                +
+        <counter :count="2" @change="changeFn"></counter>
+                =
+        <span>{{total}}</span>
+
+    </div>
+    <script>
+        /**
+         * 父组件给子组件传值都是以属性进行传值的，
+         * 子组件给父组件传值，需要发射一个事件，然后通过父组件监听这个事件，然后子组件发射事件的时候
+         * 可以传值，
+         */ 
+        let counter={
+            props:['count'],
+            template:'<span @click="handleClick">{{number}}</span>',
+            methods:{
+                handleClick(){
+                    /**
+                     * this.count++,
+                     * 这样写是不对的，不信你打开注释，看看控制台，会保错，
+                     * 不要直接修改父组件传过来的数据。
+                     * 在Vue 中有一个单向数据流的概念，父组件可以向子组件传递参数，但是
+                     * 子组件不能修改父组件传过来的参数，只能使用这个参数。
+                     * 那怎么修改呢？就在data里面用变量接住这个值
+                     * 
+                    */
+                   this.number=this.number+2;
+                   this.$emit('change',2);//这里可以传好多参数，看你自己需要
+                }
+            },
+            data(){
+                return {
+                    number:this.count
+                }
+            }
+        };
+        let vm = new Vue({
+            el:'#root',
+            components:{
+                counter:counter
+            },
+            data:{
+                total:5
+            },
+            methods:{
+                changeFn(curNumber){
+                    this.total+=curNumber
+                }
+            }
+        })
+    </script>
+</body>
+</html>

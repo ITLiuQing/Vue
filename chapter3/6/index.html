@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中使用插槽</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 插槽在好多框架都有用到 -->
+        <!-- 具名插槽 -->
+        <child >
+            <p slot="en">World</p>
+            <p slot="ch">世界</p>
+        </child>
+    </div>
+    <script>
+        // 子组件需要从父组件引入两个插槽，
+        Vue.component('child',{
+            template:`<div> 
+                <slot name="en">可以定义默认值，直接定义在我写的这里</slot>
+                    <p>hello</p> 
+                <slot name="ch">可以定义默认值，直接定义在我写的这里</slot>
+                </div>`
+        });
+        let vm = new Vue({
+            el:'#root',
+            
+        })
+    </script>
+</body>
+</html>
