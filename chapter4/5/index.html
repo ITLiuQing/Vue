@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中多个元素或组件的过渡</title>
+    <link rel="stylesheet" href="../../css/animate.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/velocity.min.js"></script>
+    <style>
+        .v-enter,.v-leave-to{
+            opacity: 0;
+        }
+        .v-enter-active,.v-leave-active{
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition 
+            mode:='in-out'
+        >
+            <div v-if="isShow" key="en">hello world</div>
+            <div v-else key="ch">世界你好</div>
+        </transition>
+        <!-- 动态组件实现动画 -->
+        <transition 
+            mode:='out-in'
+        >
+            <component :is="type"></component>            
+        </transition>
+        <button @click="handleBtnClcik">渐隐渐现</button>
+    </div>
+    <script>
+        /**
+         * 1.mode 
+         * in-out
+         * 先显示的元素先进来，再隐藏
+         * out-in
+         * 先隐藏的元素先隐藏，再显示
+        */
+
+        Vue.component('child1',{
+            template:'<div>hello world</div>'
+        });
+        Vue.component('child2',{
+            template:'<div>世界你好</div>'
+        });
+        let vm = new Vue({
+            el:'#root',
+            data:{
+                isShow:true,
+                type:'child1'
+            },
+            methods:{
+                handleBtnClcik(){
+                    this.isShow= !this.isShow;
+                    this.type = this.type ==='child1' ? 'child2' : 'child1';
+                }
+               
+            }
+        })
+    </script>
+</body>
+</html>

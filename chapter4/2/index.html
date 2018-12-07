@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在Vue中使用Animate.css库</title>
+    <link rel="stylesheet" href="../../css/animate.css">
+    <script src="../../js/vue.js"></script>
+    <style>
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0)
+            }
+            50% {
+                transform: scale(1.5)
+            }
+            100% {
+                transform: scale(1)
+            }
+        }
+        .enter{
+            transform-origin: left center;
+            animation: bounce-in 1s;
+        }
+        .leave{
+            transform-origin: left center;
+            animation: bounce-in 1s reverse;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition 
+            name="fade"
+            enter-active-class="enter"
+            leave-active-class="leave"
+        >
+            <div v-if="isShow">hello world</div>
+        </transition>
+        <!-- 使用css库写法 -->
+        <transition 
+            name="fade"
+            enter-active-class="animated shake"
+            leave-active-class="animated swing"
+        >
+            <div v-if="isShow">hello world</div>
+        </transition>
+        <button @click="handleBtnClcik">渐隐渐现</button>
+    </div>
+    <script>
+        /**
+         * 1.自定义class,看上面代码
+         * 2.引入animate.css库
+         * 注意：第一必须使用自定义写法，把两个属性名加上
+         * 第二就是必须包含一个animated 类名
+         * 
+        */
+        let vm = new Vue({
+            el:'#root',
+            data:{
+                isShow:true
+            },
+            methods:{
+                handleBtnClcik(){
+                    this.isShow=!this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+</html>

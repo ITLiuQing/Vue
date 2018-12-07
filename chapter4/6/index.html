@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中列表的过渡</title>
+    <link rel="stylesheet" href="../../css/animate.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/velocity.min.js"></script>
+    <style>
+        .v-enter,.v-leave-to{
+            opacity: 0;
+        }
+        .v-enter-active,.v-leave-active{
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+       
+        <transition-group>
+            <div v-for="item of list" :key="item.id">
+                {{item.value}}
+            </div> 
+        </transition-group>
+        <button @click="handleBtnClcik">Add</button>
+    </div>
+    <script>
+        /**
+         * 实现原理
+         * 相当于给列表的每一项都加了一个transition
+        */
+
+        let count=1;
+        let vm = new Vue({
+            el:'#root',
+            data:{
+                isShow:true,
+                type:'child1',
+                list:[{id:1,value:'我第1'}]
+            },
+            methods:{
+                handleBtnClcik(){
+                    this.list.push({
+                        id:count++,
+                        value:'我第'+ count
+                    })
+                }
+               
+            }
+        })
+    </script>
+</body>
+</html>

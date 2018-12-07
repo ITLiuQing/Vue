@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中Js动画与Velocity.js的结合</title>
+    <link rel="stylesheet" href="../../css/animate.css">
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/velocity.min.js"></script>
+    <style>
+        .fade-enter,.fade-leave-to{
+            opacity: 0;
+        }
+        .fade-enter-active,.fade-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition 
+            name="fade"
+            @before-enter="handleBeforeEnter"
+            @enter="handleEnter"
+            @after-enter="handleAfterEnter"
+        >
+            <div v-if="isShow">hello world</div>
+        </transition>
+        <!-- velocity  用法-->
+        <transition 
+            @before-leave="handleBeforeLeave"
+            @leave="handleLeave"
+            @after-leave="handleAfterLeave"
+        >
+            <div v-if="isShow">hello world</div>
+        </transition>
+        <button @click="handleBtnClcik">渐隐渐现</button>
+    </div>
+    <script>
+        /**
+         * 1.出场效果
+         * @before-enter="handleBeforeEnter"
+            @enter="handleEnter"
+            @after-enter="handleAfterEnter"
+         * 2.入场效果
+         *  @before-leave="handleBeforeEnter"
+            @leave="handleEnter"
+            @after-leave="handleAfterEnter"
+        */
+        let vm = new Vue({
+            el:'#root',
+            data:{
+                isShow:true
+            },
+            methods:{
+                handleBtnClcik(){
+                    this.isShow=!this.isShow
+                },
+                handleBeforeEnter(el){
+                    //el就是transtion包裹的div这个元素
+                    el.style.color='#f00';
+                },
+                handleEnter(el,done){
+                    //done是个回调函数
+                    setTimeout(()=>{
+                        el.style.color='green';
+                    },2000)
+                    setTimeout(()=>{
+                        //当动画执行完之后，要调用一下done
+                        done(); 
+                        console.log(666);
+                    },4000)
+                },
+                handleAfterEnter(el){
+                    //el就是transtion包裹的div这个元素
+                    console.log(555);
+                    el.style.color = '#000';
+                },
+                handleBeforeLeave(el){
+                    el.style.opactity=1;
+                },
+                handleLeave(el,done){
+                    Velocity(el,{
+                        opactity:0
+                    },{
+                        duration:1000,
+                        complete:done
+                    });
+                },
+                handleAfterLeave(el){
+                    console.log('动画结束');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

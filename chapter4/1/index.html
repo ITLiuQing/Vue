@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中CSS动画原理</title>
+    <script src="../../js/vue.js"></script>
+    <style>
+        .fade-enter,.fade-leave,.fade-leave-to{
+            opacity: 0;
+        }
+        .fade-enter-active,.fade-leave-active{
+            transition: opacity 6s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <transition name="fade">
+            <div v-if="isShow">hello world</div>
+            <!-- <div v-show="!isShow"> 世界你好 </div> -->
+        </transition>
+        <button @click="handleBtnClcik">渐隐渐现</button>
+    </div>
+    <script>
+        /**
+         * 构建一个动画原理，在还未执行之前也就是第一帧的时候
+            会往div加两个class，当执行到第二帧的时候，移除到第一个class，
+            然后添加fade-*-to,当执行到最后一帧，把剩余的两个
+            class也移除。这里之所以都是fade前缀，是因为你的
+                <transition name="fade">这里定义的就是fade,如果不
+            定义name,默认是v前缀
+
+        */
+        let vm = new Vue({
+            el:'#root',
+            data:{
+                isShow:true
+            },
+            methods:{
+                handleBtnClcik(){
+                    this.isShow=!this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+</html>

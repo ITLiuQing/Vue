@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在Vue中同时使用过渡和动画</title>
+    <link rel="stylesheet" href="../../css/animate.css">
+    <script src="../../js/vue.js"></script>
+    <style>
+        .fade-enter,.fade-leave-to{
+            opacity: 0;
+        }
+        .fade-enter-active,.fade-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        
+        <!-- 使用css库写法 -->
+        <transition 
+            name="fade"
+            type="transition"
+            :duration="{enter:5000,leave:8000}"
+            enter-active-class="animated shake"
+            leave-active-class="animated swing"
+            appear
+            appear-active-class="animated shake"
+        >
+            <div v-if="isShow">hello world</div>
+        </transition>
+        <button @click="handleBtnClcik">渐隐渐现</button>
+    </div>
+    <script>
+        /**
+         * 1.第一次显示的时候也要显示动画效果怎么写？
+         * appear
+           appear-active-class="animated 动画效果class"
+         * 2.animate.css库是@keyframes 形式 
+         * 注意：第一必须使用自定义写法，把两个属性名加上
+         * 第二就是必须包含一个animated 类名
+         * 3.如何设置动画时长？
+         * 当两个动画都要实现，但是要以哪个动画时长为时长呢？可以通过type属性，如果还不能满足需要
+         * 那么你还可以使用duration来设置可以简单来写duration:5000 ，
+         * 也可以复杂来写:duration="{enter:5000,leave:8000}"
+         * 
+        */
+        let vm = new Vue({
+            el:'#root',
+            data:{
+                isShow:true
+            },
+            methods:{
+                handleBtnClcik(){
+                    this.isShow=!this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+</html>
